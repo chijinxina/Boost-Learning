@@ -21,17 +21,24 @@ public:
     void Sub1()  //子线程1
     {
         std::cout<<"Sub1线程初始化成功！"<<std::endl;
-        while(1){
-            //boost::mutex::scoped_lock lock(Subi_mu);
-            try {
-                Subi_mu.lock();
+        while(1)
+        {
+            {
+                boost::mutex::scoped_lock lock(Subi_mu);
                 Sub_i=Sub_i+1;
                 std::cout<<"Sub1线程计算Sub_i="<<Sub_i<<std::endl;
-                Subi_mu.unlock();
-            }catch(...){
-                Subi_mu.unlock();
             }
-            usleep(1000000);
+
+//            try {
+//                Subi_mu.lock();
+//                Sub_i=Sub_i+1;
+//                std::cout<<"Sub1线程计算Sub_i="<<Sub_i<<std::endl;
+//                Subi_mu.unlock();
+//            }catch(...){
+//                Subi_mu.unlock();
+//            }
+           // usleep(100000);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
     }
 
@@ -39,17 +46,23 @@ public:
     {
         //int Sub_i=0;
         std::cout<<"Sub2线程初始化成功！"<<std::endl;
-        while(1){
-            //boost::mutex::scoped_lock lock(Subi_mu);
-            try {
-                Subi_mu.lock();
-                Sub_i=Sub_i+1;
+        while(1)
+        {
+            {
+                boost::mutex::scoped_lock lock(Subi_mu);
+                Sub_i=Sub_i-1;
                 std::cout<<"Sub2线程计算Sub_i="<<Sub_i<<std::endl;
-                Subi_mu.unlock();
-            }catch(...){
-                Subi_mu.unlock();
             }
-            usleep(1000000);
+//            try {
+//                Subi_mu.lock();
+//                Sub_i=Sub_i+1;
+//                std::cout<<"Sub2线程计算Sub_i="<<Sub_i<<std::endl;
+//                Subi_mu.unlock();
+//            }catch(...){
+//                Subi_mu.unlock();
+//            }
+            //usleep(10000);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
     }
 protected:
@@ -59,8 +72,10 @@ protected:
     boost::shared_ptr<boost::thread> Sub2Thread;
 };
 
+
+
+
 int main(){
     demo d(10);
-
     return 0;
 }
