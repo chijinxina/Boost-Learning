@@ -8,22 +8,22 @@ class demo{
 public:
     int a,b,c;
     demo(int x=1,int y=2,int z=3):a(x),b(y),c(z){
-        std::cout<<"µ÷ÓÃdemo¹¹Ôìº¯Êı£¡"<<std::endl;
+        std::cout<<"è°ƒç”¨demoæ„é€ å‡½æ•°ï¼"<<std::endl;
     };
     ~demo(){
-        std::cout<<"µ÷ÓÃdemoÎö¹¹º¯Êı£¡"<<std::endl;
+        std::cout<<"è°ƒç”¨demoææ„å‡½æ•°ï¼"<<std::endl;
     }
 };
 
 int main(int argc,char **argv){
-    object_pool<demo> pl;//¶ÔÏóÄÚ´æ³Ø
-    demo *p  = pl.malloc();//·ÖÅäÒ»¸öÔ­Ê¼ÄÚ´æ¿é
+    object_pool<demo> pl;//å¯¹è±¡å†…å­˜æ± 
+    demo *p  = pl.malloc();//åˆ†é…ä¸€ä¸ªåŸå§‹å†…å­˜å—
     assert(pl.is_from(p));
 
-    //pÖ¸ÏòµÄÄÚ´æÃ»ÓĞ³õÊ¼»¯
+    //pæŒ‡å‘çš„å†…å­˜æ²¡æœ‰åˆå§‹åŒ–
     std::cout<<"p->a:"<<p->a<<" p->b:"<<p->b<<" p->c:"<<p->c<<std::endl;
 
-    demo *pp = pl.construct(7,8,9);//¹¹ÔìÒ»¸ö¶ÔÏó£¬¿ÉÒÔ´«µİ²ÎÊı
+    demo *pp = pl.construct(7,8,9);//æ„é€ ä¸€ä¸ªå¯¹è±¡ï¼Œå¯ä»¥ä¼ é€’å‚æ•°
     std::cout<<"pp->a:"<<pp->a<<" pp->b:"<<pp->b<<" pp->c:"<<pp->c<<std::endl;
 
     pl.destroy(pp);

@@ -13,12 +13,14 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 # 添加可执行文件输出路径
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
+
+set(Boost_USE_MULTITHREADED ON) #开启boost多线程支持
 ###################dependencies#######################
-find_package(Boost COMPONENTS filesystem)
+find_package(Boost COMPONENTS system filesystem thread)
 
 
-message(Boost version: ${BOOST_VERSION})
-
+message(Boost_version: ${Boost_VERSION})
+message(Boost_Lib: ${Boost_LIBRARIES})
 
 # 添加头文件
 include_directories(
@@ -27,7 +29,7 @@ include_directories(
 
 # 添加依赖库
 set(THIRD_PARTY_LIBS
-        ${OpenCV_LIBS}
+        ${Boost_LIBRARIES}
         )
 
 #######################SubCmakeList#############################
