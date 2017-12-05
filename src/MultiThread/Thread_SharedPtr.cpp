@@ -14,8 +14,10 @@ public:
         Sub_i = i;
         Sub1Thread = boost::make_shared<boost::thread>(boost::bind(&demo::Sub1,this)); //创建Sub1Thread线程
         Sub2Thread = boost::make_shared<boost::thread>(boost::bind(&demo::Sub2,this)); //创建Sub2Thread线程
-        Sub1Thread->join(); //Sub1Thread线程开始运行
-        Sub2Thread->join(); //Sub2Thread线程开始运行
+        //Sub1Thread->join(); //Sub1Thread线程开始运行 （阻塞主线程！）
+        //Sub2Thread->join(); //Sub2Thread线程开始运行 （阻塞主线程！）
+        //Sub1Thread->detach(); //Sub1Thread线程开始运行 （不阻塞主线程！即主线程与子线程分离）
+        //Sub2Thread->detach(); //Sub2Thread线程开始运行 （不阻塞主线程！即主线程与子线程分离）
     }
 
     void Sub1()  //子线程1
@@ -77,5 +79,12 @@ protected:
 
 int main(){
     demo d(10);
+    int i=1;
+    boost::this_thread::sleep(boost::posix_time::seconds(1));
+    while(1)
+    {
+        std::cout<<"主线程！"<<std::endl;
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+    }
     return 0;
 }

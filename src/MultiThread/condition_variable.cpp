@@ -14,14 +14,16 @@ public:
     {
         Middle_var=var;
         std::cout<<"调用ProCon构造函数！"<<std::endl;
-        ProducerThread = boost::make_shared<boost::thread>(boost::bind(&ProCon::Producer,this));
+        ProducerThread1 = boost::make_shared<boost::thread>(boost::bind(&ProCon::Producer,this,1));
+        ProducerThread2 = boost::make_shared<boost::thread>(boost::bind(&ProCon::Producer,this,2));
         ConsumerThread = boost::make_shared<boost::thread>(boost::bind(&ProCon::Consumer,this));
     }
     ~ProCon(){std::cout<<"调用ProCon析构函数！"<<std::endl;}
 
     void start()
     {
-        ProducerThread->join();
+        ProducerThread1->join();
+        ProducerThread2->join();
         ConsumerThread->join();
         std::cout<<"ProCon系统启动！"<<std::endl;
     }
@@ -30,20 +32,21 @@ public:
 protected:
     boost::mutex Middle_mu;
     boost::condition_variable Middle_cv;
-    boost::shared_ptr<boost::thread> ProducerThread;
+    boost::shared_ptr<boost::thread> ProducerThread1;
+    boost::shared_ptr<boost::thread> ProducerThread2;
     boost::shared_ptr<boost::thread> ConsumerThread;
     int Middle_var;
 
-    void Producer()
+    void Producer(int Num)
     {
-        std::cout<<"生产者初始化成功！"<<std::endl;
+        std::cout<<"生产者"<<Num<<"初始化成功！"<<std::endl;
 
         while(1)
         {
             {
                 boost::mutex::scoped_lock lock(Middle_mu);
                 Middle_var++;
-                std::cout<<"生产者准备好数据！"<<std::endl;
+                std::cout<<"生产者"<<Num<<"准备好数据！"<<std::endl;
             }
             Middle_cv.notify_one();
             boost::this_thread::sleep(boost::posix_time::seconds(1));
