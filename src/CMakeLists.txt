@@ -50,3 +50,12 @@ target_link_libraries(
         ThreadPool_condition_varible_demo
         ${THIRD_PARTY_LIBS}
 )
+
+##############################################
+#                coroutine2 demo             #
+##############################################
+add_executable(coroutine_firstExample coroutine2/firstExample.cpp)
+target_link_libraries(
+        coroutine_firstExample
+        ${THIRD_PARTY_LIBS}
+)

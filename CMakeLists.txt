@@ -16,7 +16,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 set(Boost_USE_MULTITHREADED ON) #开启boost多线程支持
 ###################dependencies#######################
-find_package(Boost COMPONENTS system filesystem thread)
+find_package(Boost 1.64.0 COMPONENTS context system filesystem thread coroutine)
 
 
 message(Boost_version: ${Boost_VERSION})
