@@ -59,3 +59,12 @@ target_link_libraries(
         coroutine_firstExample
         ${THIRD_PARTY_LIBS}
 )
+
+##############################################
+#                lockfree demo              #
+##############################################
+add_executable(lockfree_queue lockfree/lockfree_queue.cpp)
+target_link_libraries(
+        lockfree_queue
+        ${THIRD_PARTY_LIBS}
+)
